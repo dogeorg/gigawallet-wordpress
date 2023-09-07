@@ -1,6 +1,5 @@
 === Plugin Name ===
-Contributors: Dogecoin Foundarion (inevitable360)
-Donate link: https://x.com/DogecoinFdn
+Contributors: Dogecoin Foundation (inevitable360)
 Tags: gigawallet, doge, dogecoin, crypto, cryptocurrency, payment, gateway, wordpress, woocommerce, ecommerce, online-store
 Requires at least: 5.6
 Tested up to: 6.3.1
@@ -47,7 +46,7 @@ https://dogecoin.com/wallets/
 
 = How can I get some Doge coins? =
 
-You can mine Doge using an ASIC computer or you can buy Doge with Fiat money (Dollars/Euros/etc) on any exchange like http://coinbase.com, http://Kraken.com, http://Binance.com, http://Ftx.com, http://Etoro.com, http://Robinhood.com or even directly on the http://mydoge.com mobile wallet.
+There are many ways to get your hands on Dogecoin: from exchanges, receiving tips, accepting Dogecoin for goods and services, and even from projects.
 https://dogecoin.com/dogepedia/articles/get-dogecoin/
 
 == Screenshots ==
