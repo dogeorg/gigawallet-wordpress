@@ -5,7 +5,7 @@
  * Description: Accept Dogecoin Payments using GigaWallet backend service without the need of any third party payment processor, banks, extra fees | Your Store, your wallet, your Doge.
  * Author: Dogecoin Foundation
  * Author URI: https://foundation.dogecoin.com
- * Version: 0.01
+ * Version: 0.02
  * Requires at least: 5.6
  * Tested up to: 6.3.1
  * WC requires at least: 5.7

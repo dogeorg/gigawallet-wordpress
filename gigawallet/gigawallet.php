@@ -5,7 +5,7 @@
  * Description: Accept Dogecoin Payments using GigaWallet backend service without the need of any third party payment processor, banks, extra fees | Your Store, your wallet, your Doge.
  * Author: Dogecoin Foundation
  * Author URI: https://foundation.dogecoin.com
- * Version: 0.01
+ * Version: 0.02
  * Requires at least: 5.6
  * Tested up to: 6.3.1
  * WC requires at least: 5.7
@@ -235,7 +235,7 @@ function gigawallet_payment_init() {
                     ),                    
                     'gigawallet_dust' => array(
                         'title' => __( 'GigaWallet Minimum Dust', 'gigawallet-pay-woo'),
-                        'type' => 'number',
+                        'type' => 'float',
                         'default' => __( '0.019', 'gigawallet-pay-woo'),
                         'desc_tip' => true,
                         'description' => __( 'Minimum dust for the payout not be stuck on mempool', 'gigawallet-pay-woo')
