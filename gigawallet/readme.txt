@@ -3,7 +3,7 @@ Contributors: Dogecoin Foundation (inevitable360)
 Tags: gigawallet, doge, dogecoin, crypto, cryptocurrency, payment, gateway, wordpress, woocommerce, ecommerce, online-store
 Requires at least: 5.6
 Tested up to: 6.3.1
-Stable tag: 0.02
+Stable tag: 0.01
 Requires PHP: 7.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html

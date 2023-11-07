@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: GigaWallet Dogecoin Payment Gateway
- * Plugin URI: https://gigawallet.dogecoin.com
+ * Plugin URI: https://gigawallet.dogecoin.org
  * Description: Accept Dogecoin Payments using GigaWallet backend service without the need of any third party payment processor, banks, extra fees | Your Store, your wallet, your Doge.
  * Author: Dogecoin Foundation
  * Author URI: https://foundation.dogecoin.com
- * Version: 0.02
+ * Version: 0.01
  * Requires at least: 5.6
  * Tested up to: 6.3.1
  * WC requires at least: 5.7
@@ -91,9 +91,13 @@ function gigawallet_order_status_callback() {
             // if there is Doge money balance to be sent to the store owner, we will try to send every time
             //  until the balance is zero to be secure on their Dogecoin self-custodial wallet
             try {
+
+                // we create a GigaWallet main Wallet if there is none yet
+                $G->account("wordpress");
+
                 // we get the current available balance on GigaWallet 
                 $GigaAccountBalanceGet = json_decode($G->accountBalance("wordpress"));
-                // if balance more then zero we try to send tha payout
+                // if balance is more then zero we try to send the payout
                 if ($GigaAccountBalanceGet->CurrentBalance > 0){ 
 
                     // we send the Dogecoin payment to the Shibe self-custodial wallet using GigaWallet            
