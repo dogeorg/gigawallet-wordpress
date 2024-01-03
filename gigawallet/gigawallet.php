@@ -2,15 +2,23 @@
 /**
  * Plugin Name: GigaWallet Dogecoin Payment Gateway
  * Plugin URI: https://gigawallet.dogecoin.org
+ * Text Domain: gigawallet
  * Description: Accept Dogecoin Payments using GigaWallet backend service without the need of any third party payment processor, banks, extra fees | Your Store, your wallet, your Doge.
  * Author: Dogecoin Foundation
  * Author URI: https://foundation.dogecoin.com
+ * License: GPL v2 or later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html 
  * Version: 0.01
  * Requires at least: 5.6
  * Tested up to: 6.3.1
  * WC requires at least: 5.7
  * WC tested up to: 8.0.3
  */
+
+// Ignore if access directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 if ( ! in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) return;
 
@@ -149,15 +157,15 @@ function gigawallet_payment_init() {
 
     if( class_exists( 'WC_Payment_Gateway' ) ) {
 
-        class WC_gigawallet_Gateway extends WC_Payment_Gateway {
+        class Gigawallet_Gateway_Dogecoin extends WC_Payment_Gateway {
             public function __construct() {
                 $this->id   = 'gigawallet_payment';
                 $this->icon = apply_filters( 'woocommerce_gigawallet_icon', plugins_url('/assets/icon.svg', __FILE__ ) );
                 $this->has_fields = false;
-                $this->method_title = __( 'GigaWallet Dogecoin', 'gigawallet-pay-woo');
-                $this->method_description = __( 'Accepts Dogecoin payments using the GigaWallet Dogecoin payment backend service.', 'gigawallet-pay-woo');
+                $this->method_title = __( 'GigaWallet Dogecoin', 'gigawallet-wordpress');
+                $this->method_description = __( 'Accepts Dogecoin payments using the GigaWallet Dogecoin payment backend service.', 'gigawallet');
 
-                $this->title = __( 'Dogecoin (Gigawallet)', 'gigawallet-pay-woo');
+                $this->title = __( 'Dogecoin (Gigawallet)', 'gigawallet');
                 $this->gigawallet_payto = $this->get_option( 'gigawallet_payto' );
 
                 $this->gigawallet_dust = (int)$this->get_option( 'gigawallet_dust' );
@@ -215,90 +223,90 @@ function gigawallet_payment_init() {
 
                 $this->form_fields = apply_filters( 'woo_gigawallet_pay_fields', array(
                     'enabled' => array(
-                        'title' => __( 'Enable/Disable', 'gigawallet-pay-woo'),
+                        'title' => __( 'Enable/Disable', 'gigawallet'),
                         'type' => 'checkbox',
-                        'label' => __( 'Enable or Disable GigaWallet Dogecoin Payments', 'gigawallet-pay-woo'),
+                        'label' => __( 'Enable or Disable GigaWallet Dogecoin Payments', 'gigawallet'),
                         'default' => 'no'
                     ),
                     'gigawallet_balance' => array(
-                        'title' => __( 'Your GigaWallet Balance', 'gigawallet-pay-woo'),
+                        'title' => __( 'Your GigaWallet Balance', 'gigawallet'),
                         'type' => 'text',
                         'custom_attributes' => array(
                             'readonly' => 'readonly', // This makes the field read-only
                         ),                        
-                        'default' => __( 'Ð '.$this->amount, 'gigawallet-pay-woo'),
+                        'default' => printf(__( 'Ð %s', 'gigawallet' ),esc_html($this->amount)),
                         'desc_tip' => true,
-                        'description' => __( 'Your Dogecoin Balance on your GigaWallet Server', 'gigawallet-pay-woo')
+                        'description' => __( 'Your Dogecoin Balance on your GigaWallet Server', 'gigawallet')
                     ),
                     'gigawallet_payto' => array(
-                        'title' => __( 'Dogecoin Payout Address', 'gigawallet-pay-woo'),
+                        'title' => __( 'Dogecoin Payout Address', 'gigawallet'),
                         'type' => 'text',
-                        'default' => __( 'Dxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', 'gigawallet-pay-woo'),
+                        'default' => __( 'Dxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', 'gigawallet'),
                         'desc_tip' => true,
-                        'description' => __( 'Your Dogecoin address to recive your payments', 'gigawallet-pay-woo')
+                        'description' => __( 'Your Dogecoin address to recive your payments', 'gigawallet')
                     ),                    
                     'gigawallet_dust' => array(
-                        'title' => __( 'GigaWallet Minimum Dust', 'gigawallet-pay-woo'),
+                        'title' => __( 'GigaWallet Minimum Dust', 'gigawallet'),
                         'type' => 'float',
-                        'default' => __( '0.019', 'gigawallet-pay-woo'),
+                        'default' => __( '0.019', 'gigawallet'),
                         'desc_tip' => true,
-                        'description' => __( 'Minimum dust for the payout not be stuck on mempool', 'gigawallet-pay-woo')
+                        'description' => __( 'Minimum dust for the payout not be stuck on mempool', 'gigawallet')
                     ),
                     'gigawallet_confirmations' => array(
-                        'title' => __( 'GigaWallet Minimum Confirmations', 'gigawallet-pay-woo'),
+                        'title' => __( 'GigaWallet Minimum Confirmations', 'gigawallet'),
                         'type' => 'number',
-                        'default' => __( '3', 'gigawallet-pay-woo'),
+                        'default' => __( '3', 'gigawallet'),
                         'desc_tip' => true,
-                        'description' => __( 'Minimum Dogecoin Blockchain Confirmations needed to mark an invoice as paid', 'gigawallet-pay-woo')
+                        'description' => __( 'Minimum Dogecoin Blockchain Confirmations needed to mark an invoice as paid', 'gigawallet')
                     ),                                          
                     'gigawallet_adminbind' => array(
-                        'title' => __( 'GigaWallet Admin Server', 'gigawallet-pay-woo'),
+                        'title' => __( 'GigaWallet Admin Server', 'gigawallet'),
                         'type' => 'text',
-                        'default' => __( 'localhost', 'gigawallet-pay-woo'),
+                        'default' => __( 'localhost', 'gigawallet'),
                         'desc_tip' => true,
-                        'description' => __( 'Your GigaWallet Admin Bind Server', 'gigawallet-pay-woo')
+                        'description' => __( 'Your GigaWallet Admin Bind Server', 'gigawallet')
                     ),
                     'gigawallet_adminbind_port' => array(
-                        'title' => __( 'GigaWallet Admin Server Port', 'gigawallet-pay-woo'),
+                        'title' => __( 'GigaWallet Admin Server Port', 'gigawallet'),
                         'type' => 'number',
-                        'default' => __( '420', 'gigawallet-pay-woo'),
+                        'default' => __( '420', 'gigawallet'),
                         'desc_tip' => true,
-                        'description' => __( 'Your GigaWallet Admin Bind Server Port', 'gigawallet-pay-woo')
+                        'description' => __( 'Your GigaWallet Admin Bind Server Port', 'gigawallet')
                     ),                        
                     'gigawallet_pubbind' => array(
-                        'title' => __( 'GigaWallet Public Server', 'gigawallet-pay-woo'),
+                        'title' => __( 'GigaWallet Public Server', 'gigawallet'),
                         'type' => 'text',
-                        'default' => __( 'localhost', 'gigawallet-pay-woo'),
+                        'default' => __( 'localhost', 'gigawallet'),
                         'desc_tip' => true,
-                        'description' => __( 'Your GigaWallet Public Bind Server', 'gigawallet-pay-woo')
+                        'description' => __( 'Your GigaWallet Public Bind Server', 'gigawallet')
                     ),
                     'gigawallet_pubbind_port' => array(
-                        'title' => __( 'GigaWallet Public Server Port', 'gigawallet-pay-woo'),
+                        'title' => __( 'GigaWallet Public Server Port', 'gigawallet'),
                         'type' => 'number',
-                        'default' => __( '69', 'gigawallet-pay-woo'),
+                        'default' => __( '69', 'gigawallet'),
                         'desc_tip' => true,
-                        'description' => __( 'Your GigaWallet Public Bind Server Port', 'gigawallet-pay-woo')
+                        'description' => __( 'Your GigaWallet Public Bind Server Port', 'gigawallet')
                     ),
                     'gigawallet_fg' => array(
-                        'title' => __( 'GigaWallet QR foregorund', 'gigawallet-pay-woo'),
+                        'title' => __( 'GigaWallet QR foregorund', 'gigawallet'),
                         'type' => 'color',
-                        'default' => __( '#000000', 'gigawallet-pay-woo'),
+                        'default' => __( '#000000', 'gigawallet'),
                         'desc_tip' => true,
-                        'description' => __( 'Foreground color of the QR image', 'gigawallet-pay-woo')
+                        'description' => __( 'Foreground color of the QR image', 'gigawallet')
                     ),
                     'gigawallet_bg' => array(
-                        'title' => __( 'GigaWallet QR background', 'gigawallet-pay-woo'),
+                        'title' => __( 'GigaWallet QR background', 'gigawallet'),
                         'type' => 'color',
-                        'default' => __( '#ffffff', 'gigawallet-pay-woo'),
+                        'default' => __( '#ffffff', 'gigawallet'),
                         'desc_tip' => true,
-                        'description' => __( 'Background color of the QR image', 'gigawallet-pay-woo')
+                        'description' => __( 'Background color of the QR image', 'gigawallet')
                     ),                                    
                     'gigawallet_instructions' => array(
-                        'title' => __( 'Payment Instructions', 'gigawallet-pay-woo'),
+                        'title' => __( 'Payment Instructions', 'gigawallet'),
                         'type' => 'text',
-                        'default' => __( 'Make sure to pay in full the order.', 'gigawallet-pay-woo'),
+                        'default' => __( 'Make sure to pay in full the order.', 'gigawallet'),
                         'desc_tip' => true,
-                        'description' => __( 'Instructions shown to the buyer', 'gigawallet-pay-woo')
+                        'description' => __( 'Instructions shown to the buyer', 'gigawallet')
                     )                      
                 ));
             }
@@ -417,9 +425,9 @@ function gigawallet_payment_init() {
         $this->bg = str_replace("#", "", $this->gigawallet_bg);
 
         // we echo the QR and Dogecoin Addrees generated by GigaWallet
-        echo '<p style="text-align: center"><img style="margin:auto" src="'.plugins_url('/assets/wow.gif', __FILE__ ).'" alt="Gigawallet" /></p>';
+        echo '<p style="text-align: center"><img style="margin:auto" src="' . esc_html(plugins_url('/assets/wow.gif', __FILE__ )) . '" alt="Gigawallet" /></p>';
         echo '<div class="row"><div style="border-top: 5px solid #ccc; border-top-left-radius: 15px; border-top-right-radius: 15px; padding: 10px; padding-bottom: 15px">' . esc_html($this->gigawallet_instructions) . '</div><div class="col" style="float:none;margin:auto; text-align: center;max-width: 425px; border: 2px solid #ccc; border-radius: 15px; padding: 10px;"><div style="background-color: #ccc; padding: 10px; border-radius: 15px; border-bottom-left-radius: 0px; border-bottom-right-radius: 0px; text-align: center"><h2 style="font-size: 20px; color: rgba(0, 0, 0, 1); font-weight: bold">Ð '. esc_html($order->data["total"]) . '</h2></div>';
-        echo '<img src="data:image/png;base64, ' . base64_encode($this->G->qr($this->GigaWalletInvoiveId,$this->fg,$this->bg)). '" style="max-width: 150;" alt="Much pay" />';
+        echo '<img src="data:image/png;base64, ' . esc_html(base64_encode($this->G->qr($this->GigaWalletInvoiveId,$this->fg,$this->bg))) . '" style="max-width: 150;" alt="Much pay" />';
         echo '<div style="background-color: #ccc; padding: 10px; border-radius: 15px; border-top-left-radius: 0px; border-top-right-radius: 0px; color: rgba(0, 0, 0, 1)">' . esc_html($this->GigaWalletInvoiveId) . '</div>';
         echo '<br><br><a class="button" href="dogecoin:' . esc_html($this->GigaWalletInvoiveId) . '?amount=' . esc_html($order->data["total"]) . '" target="_blank">Click to Pay with Wallet</a>';
 
@@ -427,7 +435,7 @@ function gigawallet_payment_init() {
         $order->add_order_note("Pay to: ".esc_html($this->GigaWalletInvoiveId), false);
 
         $order->payment_complete();
-        $order->update_status( 'pending',  __( 'Awaiting Dogecoin Payment Confirmation', 'gigawallet-pay-woo') );
+        $order->update_status( 'pending',  __( 'Awaiting Dogecoin Payment Confirmation', 'gigawallet') );
         WC()->cart->empty_cart();
       }
   /**
@@ -448,9 +456,9 @@ function gigawallet_payment_init() {
         $this->bg = str_replace("#", "", $this->gigawallet_bg);
 
         // we echo the QR and Dogecoin Addrees generated by GigaWallet
-        echo '<p style="text-align: center"><img style="margin:auto" src="'.plugins_url('/assets/wow.gif', __FILE__ ).'" alt="Gigawallet" /></p>';
+        echo '<p style="text-align: center"><img style="margin:auto" src="' . esc_html(plugins_url('/assets/wow.gif', __FILE__ )) . '" alt="Gigawallet" /></p>';
         echo '<div class="row"><div style="border-top: 5px solid #ccc; border-top-left-radius: 15px; border-top-right-radius: 15px; padding: 10px; padding-bottom: 15px">' . esc_html($this->gigawallet_instructions) . '</div><div class="col" style="float:none;margin:auto; text-align: center;max-width: 425px; border: 2px solid #ccc; border-radius: 15px; padding: 10px;"><div style="background-color: #ccc; padding: 10px; border-radius: 15px; border-bottom-left-radius: 0px; border-bottom-right-radius: 0px; text-align: center"><h2 style="font-size: 20px; color: rgba(0, 0, 0, 1); font-weight: bold; text-align: center;">Ð '. esc_html($order->data["total"]) . '</h2></div>';
-        echo '<p style="text-align: center; font-weight:bold; margin:15px">'.esc_html($this->GigaWalletInvoiveId).'<p>';
+        echo '<p style="text-align: center; font-weight:bold; margin:15px">' . esc_html($this->GigaWalletInvoiveId) . '<p>';
         echo '<div style="background-color: #ccc; padding: 10px; border-radius: 15px; border-top-left-radius: 0px; border-top-right-radius: 0px; color: rgba(0, 0, 0, 1)"></div><br><br>';
   }
 
@@ -460,10 +468,10 @@ function gigawallet_payment_init() {
 }
 
 
-  add_filter( 'woocommerce_payment_gateways', 'add_to_woo_gigawallet_payment_gateway');
+  add_filter( 'woocommerce_payment_gateways', 'push_to_gigawallet_payment_gateway');
 
-  function add_to_woo_gigawallet_payment_gateway( $gateways ) {
-      $gateways[] = 'WC_gigawallet_Gateway';
+  function push_to_gigawallet_payment_gateway( $gateways ) {
+      $gateways[] = 'Gigawallet_Gateway_Dogecoin';
       return $gateways;
   }
 

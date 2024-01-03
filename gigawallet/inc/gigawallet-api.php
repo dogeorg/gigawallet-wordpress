@@ -1,10 +1,13 @@
 <?php
 /**
- * Plugin Name: GigaWallet Dogecoin Gateway
+ * Plugin Name: GigaWallet Dogecoin Payment Gateway
  * Plugin URI: https://gigawallet.dogecoin.org
+ * Text Domain: gigawallet
  * Description: Accept Dogecoin Payments using GigaWallet backend service without the need of any third party payment processor, banks, extra fees | Your Store, your wallet, your Doge.
  * Author: Dogecoin Foundation
  * Author URI: https://foundation.dogecoin.com
+ * License: GPL v2 or later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html 
  * Version: 0.01
  * Requires at least: 5.6
  * Tested up to: 6.3.1
@@ -101,38 +104,38 @@ class GigaWalletBridge {
 
     // Sends commands to the GigaWallet Server
     public function sendGigaCommand($url, $method = 'GET', $data = array()) {
-        $ch = curl_init();
-    
-        // Set the URL
-        curl_setopt($ch, CURLOPT_URL, $url);
-    
-        // Set the request method
-        if ($method == 'POST') {
-            curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-            // Set the Content-Type header to specify JSON data
-        }
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-    
-        // Set the option to return the response as a string
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    
-        // Execute the request
-        $response = curl_exec($ch);
-    
-        // Check for errors
-        if (curl_errno($ch)) {
-            $error = curl_error($ch);
-            curl_close($ch);
-            throw new Exception("GigaWallet Error: $error");
+        $args = array(
+            'headers'     => array(
+                'Content-Type' => 'application/json',
+            ),
+            'timeout'     => 60,
+        );
+
+        if ($method === 'POST') {
+            $args['method'] = 'POST';
+            $args['body'] = json_encode($data);
         }
 
-        // Close the curl handle
-        curl_close($ch);
-    
-        // Return the response
-        return $response;
-    }    
+        // Set the transport method to cURL
+        $args['transport'] = 'curl';
+
+        $response = null;
+
+        if ($method === 'GET') {
+            $response = wp_remote_get($url, $args);
+        } elseif ($method === 'POST') {
+            $response = wp_remote_post($url, $args);
+        }
+
+        if (is_wp_error($response)) {
+            throw new Exception("GigaWallet Error: " . $response->get_error_message());
+        }
+
+        // Retrieve the response body
+        $response_body = wp_remote_retrieve_body($response);
+
+        return $response_body;
+    }  
 
 }    
 
