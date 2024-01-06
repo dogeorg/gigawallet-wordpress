@@ -100,8 +100,10 @@ function gigawallet_order_status_callback() {
             //  until the balance is zero to be secure on their Dogecoin self-custodial wallet
             try {
 
-                // we create a GigaWallet main Wallet if there is none yet
-                $G->account("wordpress");
+                // we create a GigaWallet main Wallet if there is none yet                  
+                if (isset($gigawallet_payto)){
+                    $G->account("wordpress" ,esc_html($gigawallet_payto),0,0,"POST");                    
+                }
 
                 // we get the current available balance on GigaWallet 
                 $GigaAccountBalanceGet = json_decode($G->accountBalance("wordpress"));
@@ -208,7 +210,7 @@ function gigawallet_payment_init() {
                     //throw new Exception("Error",0,$e);
                 }
                 // we always update the current available balance
-                $this->update_option( "gigawallet_balance", "Ð ".$this->amount );
+                $this->update_option( 'gigawallet_balance', 'Ð ' . $this->amount );
 
                 $this->init_form_fields();
                 $this->init_settings();
@@ -234,7 +236,7 @@ function gigawallet_payment_init() {
                         'custom_attributes' => array(
                             'readonly' => 'readonly', // This makes the field read-only
                         ),                        
-                        'default' => printf(__( 'Ð %s', 'gigawallet' ),esc_html($this->amount)),
+                        'default' => 'Ð ' . esc_html($this->amount),
                         'desc_tip' => true,
                         'description' => __( 'Your Dogecoin Balance on your GigaWallet Server', 'gigawallet')
                     ),
@@ -262,7 +264,7 @@ function gigawallet_payment_init() {
                     'gigawallet_adminbind' => array(
                         'title' => __( 'GigaWallet Admin Server', 'gigawallet'),
                         'type' => 'text',
-                        'default' => __( 'localhost', 'gigawallet'),
+                        'default' => __( 'http://localhost', 'gigawallet'),
                         'desc_tip' => true,
                         'description' => __( 'Your GigaWallet Admin Bind Server', 'gigawallet')
                     ),
@@ -276,7 +278,7 @@ function gigawallet_payment_init() {
                     'gigawallet_pubbind' => array(
                         'title' => __( 'GigaWallet Public Server', 'gigawallet'),
                         'type' => 'text',
-                        'default' => __( 'localhost', 'gigawallet'),
+                        'default' => __( 'http://localhost', 'gigawallet'),
                         'desc_tip' => true,
                         'description' => __( 'Your GigaWallet Public Bind Server', 'gigawallet')
                     ),

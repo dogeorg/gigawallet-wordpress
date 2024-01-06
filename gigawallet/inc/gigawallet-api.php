@@ -102,40 +102,29 @@ class GigaWalletBridge {
         return $this->sendGigaCommand($this->config["GigaServer"][0] . ":" . $this->config["GigaPort"][0] . $command, 'POST', $data);
     }       
 
-    // Sends commands to the GigaWallet Server
     public function sendGigaCommand($url, $method = 'GET', $data = array()) {
         $args = array(
-            'headers'     => array(
-                'Content-Type' => 'application/json',
-            ),
-            'timeout'     => 60,
+            'headers'     => array('Content-Type' => 'application/json'),
+            'method'      => $method,
         );
 
-        if ($method === 'POST') {
-            $args['method'] = 'POST';
+        if ($method == 'POST') {
             $args['body'] = json_encode($data);
         }
 
-        // Set the transport method to cURL
-        $args['transport'] = 'curl';
-
-        $response = null;
-
-        if ($method === 'GET') {
-            $response = wp_remote_get($url, $args);
-        } elseif ($method === 'POST') {
-            $response = wp_remote_post($url, $args);
-        }
+        $response = wp_remote_request($url, $args);
 
         if (is_wp_error($response)) {
             throw new Exception("GigaWallet Error: " . $response->get_error_message());
         }
 
-        // Retrieve the response body
-        $response_body = wp_remote_retrieve_body($response);
+        $response_code = wp_remote_retrieve_response_code($response);
+        if ($response_code !== 200) {
+            throw new Exception("GigaWallet Error: HTTP Response Code - $response_code");
+        }
 
-        return $response_body;
-    }  
+        return wp_remote_retrieve_body($response);
+    }    
 
 }    
 
