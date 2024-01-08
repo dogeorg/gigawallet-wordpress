@@ -1,7 +1,7 @@
 <h1 align="center">
 Easy GigaWallet Dogecoin Payment Gateway for Wordpress and Woocommerce
 <br><br>
-<img src="gigawallet/assets/screenshot-1.png" alt="Accept Dogecoin Payments using Gigawallet backend service without the need of any third party payment processor, banks, extra fees | Your Store, your wallet, your Doge."/>
+<img src="easy-gigawallet-dogecoin-gateway/assets/screenshot-1.png" alt="Accept Dogecoin Payments using Gigawallet backend service without the need of any third party payment processor, banks, extra fees | Your Store, your wallet, your Doge."/>
 <br><br>
 </h1>
 <h2>
