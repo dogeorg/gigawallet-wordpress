@@ -1,4 +1,4 @@
-=== GigaWallet Dogecoin Payment Gateway ===
+=== Easy GigaWallet Dogecoin Gateway ===
 Contributors: inevitable360
 Tags: gigawallet, doge, dogecoin, crypto, cryptocurrency, payment, gateway, wordpress, woocommerce, ecommerce, online-store
 Requires at least: 5.6

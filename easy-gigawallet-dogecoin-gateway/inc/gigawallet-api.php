@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: GigaWallet Dogecoin Payment Gateway
+ * Plugin Name: Easy GigaWallet Dogecoin Gateway
  * Plugin URI: https://gigawallet.dogecoin.org
  * Text Domain: gigawallet
  * Description: Accept Dogecoin Payments using GigaWallet backend service without the need of any third party payment processor, banks, extra fees | Your Store, your wallet, your Doge.
