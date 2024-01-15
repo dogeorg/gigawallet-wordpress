@@ -60,9 +60,16 @@ https://dogecoin.com/dogepedia/articles/get-dogecoin/
 
 = Why the Plugin requires 3rd Party Coingecko? =
 
-To be able to track prices in other currencies and auto convert into to Dogecoin, it uses the free API from https://www.coingecko.com/en/api
+To be able to track in other currencies and auto convert into to Dogecoin, it uses the free API from https://www.coingecko.com/en/api
 If using the Doge Currency, it will not require the use of the coingecko API
 
+= Where are the Coingecko API Service?
+
+You can see in detail the Coingecko API Service here https://www.coingecko.com/en/api
+
+= Where are the Terms of Service of Coingecko API?
+
+You can verify the Terms of Service of the Coingecko API here https://www.coingecko.com/en/api_terms
 
 == Screenshots ==
 

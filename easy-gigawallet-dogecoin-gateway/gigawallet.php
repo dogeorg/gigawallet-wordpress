@@ -110,11 +110,12 @@ function gigawallet_order_status_callback() {
                 // if balance is more then zero we try to send the payout
                 if ($GigaAccountBalanceGet->CurrentBalance > 0){ 
 
-                    // we send the Dogecoin payment to the Shibe self-custodial wallet using GigaWallet            
+                    // we send the Dogecoin payment to the Shibe self-custodial wallet using GigaWallet
                     $data = null;
-                    $data["amount"] = $GigaAccountBalanceGet->CurrentBalance;
-                    $data["to"] = $gigawallet_payto;
-                    $G->PayTo("wordpress",$data);                    
+                    $data["pay"][0]["amount"] = floatval($GigaAccountBalanceGet->CurrentBalance);
+                    $data["pay"][0]["to"] = $gigawallet_payto;
+                    $data["pay"][0]["deduct_fee_percent"] = 100;
+                    $G->PayTo("wordpress",$data);                       
                 };  
             }
             catch(Exception $e){
@@ -159,12 +160,12 @@ function gigawallet_payment_init() {
 
     if( class_exists( 'WC_Payment_Gateway' ) ) {
 
-        class Gigawallet_Gateway_Dogecoin extends WC_Payment_Gateway {
+        class WC_EasyGigawallet_Gateway extends WC_Payment_Gateway {
             public function __construct() {
                 $this->id   = 'gigawallet_payment';
                 $this->icon = apply_filters( 'woocommerce_gigawallet_icon', plugins_url('/assets/icon.svg', __FILE__ ) );
                 $this->has_fields = false;
-                $this->method_title = __( 'GigaWallet Dogecoin', 'gigawallet-wordpress');
+                $this->method_title = __( 'Easy GigaWallet Dogecoin Gateway', 'gigawallet-wordpress');
                 $this->method_description = __( 'Accepts Dogecoin payments using the GigaWallet Dogecoin payment backend service.', 'gigawallet');
 
                 $this->title = __( 'Dogecoin (Gigawallet)', 'gigawallet');
@@ -323,6 +324,7 @@ function gigawallet_payment_init() {
      */
     static public function convert_to_crypto($value, $from='usd') {
       if ($from != 'DOGE'){
+        // we use the free API to fetch the current Doge value in FIAT. You can verify the terms on https://www.coingecko.com/en/api_terms
         $response = wp_remote_get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=".strtolower(esc_html($from))."&ids=dogecoin&per_page=1&page=1&sparkline=false");
         $price = json_decode($response["body"]);
         $response = $value / $price[0]->current_price;
@@ -470,10 +472,10 @@ function gigawallet_payment_init() {
 }
 
 
-  add_filter( 'woocommerce_payment_gateways', 'push_to_gigawallet_payment_gateway');
+  add_filter( 'woocommerce_payment_gateways', 'add_to_woo_gigawallet_payment_gateway');
 
-  function push_to_gigawallet_payment_gateway( $gateways ) {
-      $gateways[] = 'Gigawallet_Gateway_Dogecoin';
+  function add_to_woo_gigawallet_payment_gateway( $gateways ) {
+      $gateways[] = 'WC_EasyGigawallet_Gateway';
       return $gateways;
   }
 

@@ -100,7 +100,7 @@ class GigaWalletBridge {
 
         // Sends the GigaWallet Command
         return $this->sendGigaCommand($this->config["GigaServer"][0] . ":" . $this->config["GigaPort"][0] . $command, 'POST', $data);
-    }       
+    }     
 
     public function sendGigaCommand($url, $method = 'GET', $data = array()) {
         $args = array(
