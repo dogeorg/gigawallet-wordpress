@@ -2,6 +2,10 @@
 Easy GigaWallet Dogecoin Payment Gateway for Wordpress and Woocommerce
 <br><br>
 <img src="easy-gigawallet-dogecoin-gateway/assets/screenshot-1.png" alt="Accept Dogecoin Payments using Gigawallet backend service without the need of any third party payment processor, banks, extra fees | Your Store, your wallet, your Doge."/>
+<img src="easy-gigawallet-dogecoin-gateway/assets/screenshot-2.png" alt="Accept Dogecoin Payments using Gigawallet backend service without the need of any third party payment processor, banks, extra fees | Your Store, your wallet, your Doge."/>
+<img src="easy-gigawallet-dogecoin-gateway/assets/screenshot-3.png" alt="Accept Dogecoin Payments using Gigawallet backend service without the need of any third party payment processor, banks, extra fees | Your Store, your wallet, your Doge."/>
+<img src="easy-gigawallet-dogecoin-gateway/assets/screenshot-4.png" alt="Accept Dogecoin Payments using Gigawallet backend service without the need of any third party payment processor, banks, extra fees | Your Store, your wallet, your Doge."/>
+<img src="easy-gigawallet-dogecoin-gateway/assets/screenshot-5.png" alt="Accept Dogecoin Payments using Gigawallet backend service without the need of any third party payment processor, banks, extra fees | Your Store, your wallet, your Doge."/>
 <br><br>
 </h1>
 <h2>
