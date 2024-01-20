@@ -8,7 +8,7 @@
  * Author URI: https://foundation.dogecoin.com
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html 
- * Version: 0.01
+ * Version: 0.02
  * Requires at least: 5.6
  * Tested up to: 6.3.1
  * WC requires at least: 5.7
@@ -96,7 +96,11 @@ class GigaWalletBridge {
 
         // Builds the Gigawallet Command
         $command = "/account/" . $foreign_id . "/pay";
-        $data["amount"] = floatval($data["amount"] - $this->config["GigaDust"]);
+        
+        // Deduct dust to the payment to be able to send it successfull because of network fees
+        foreach ($data["pay"] as $key => $payment) {
+            $data["pay"][$key]["amount"] = floatval($payment["amount"] - $this->config["GigaDust"]);
+        }      
 
         // Sends the GigaWallet Command
         return $this->sendGigaCommand($this->config["GigaServer"][0] . ":" . $this->config["GigaPort"][0] . $command, 'POST', $data);
