@@ -8,11 +8,11 @@
  * Author URI: https://foundation.dogecoin.com
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html 
- * Version: 0.02
+ * Version: 0.03
  * Requires at least: 5.6
- * Tested up to: 6.4.1
+ * Tested up to: 6.5.5
  * WC requires at least: 5.7
- * WC tested up to: 8.0.3
+ * WC tested up to: 9.0.2
  */
 
 // Ignore if access directly.
@@ -449,7 +449,13 @@ function gigawallet_payment_init() {
    * @param bool     $sent_to_admin  Sent to admin.
    * @param bool     $plain_text Email format: plain text or HTML.
    */
-  public function email_instructions( $order, $sent_to_admin, $plain_text = false ) {    
+  public function email_instructions( $order, $sent_to_admin, $plain_text = false ) {
+
+        // Check if the payment method is 'gigawallet_payment'
+        if ( $order->get_payment_method() !== 'gigawallet_payment' ) {
+            return;
+        }    
+
         $order_id = $order->get_id();
 
         // we get the gigawallet invoice id AKA (Doge Payment Address)
