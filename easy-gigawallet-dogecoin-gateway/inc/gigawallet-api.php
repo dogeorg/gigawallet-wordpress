@@ -8,11 +8,11 @@
  * Author URI: https://foundation.dogecoin.com
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html 
- * Version: 0.02
+ * Version: 0.04
  * Requires at least: 5.6
- * Tested up to: 6.3.1
+ * Tested up to: 6.7.1
  * WC requires at least: 5.7
- * WC tested up to: 8.0.3
+ * WC tested up to: 9.4.2
  */
 
  // Ignore if access directly.

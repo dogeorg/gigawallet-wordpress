@@ -8,11 +8,11 @@
  * Author URI: https://foundation.dogecoin.com
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html 
- * Version: 0.03
+ * Version: 0.04
  * Requires at least: 5.6
- * Tested up to: 6.5.5
+ * Tested up to: 6.7.1
  * WC requires at least: 5.7
- * WC tested up to: 9.0.2
+ * WC tested up to: 9.4.2
  */
 
 // Ignore if access directly.
@@ -205,10 +205,12 @@ function gigawallet_payment_init() {
                     // if balance more then zero we update
                     if ((int)$GigaAccountBalanceGet->CurrentBalance > 0){
                         $this->amount = number_format((float)$GigaAccountBalanceGet->CurrentBalance, 2, '.', '');
-                    };  
+                    };
+                    $this->update_option( 'gigawallet_debug_info', esc_html("Connected Sucessfully to GigaWallet") );  
                 }
                 catch(Exception $e){
                     //throw new Exception("Error",0,$e);
+                    $this->update_option( 'gigawallet_debug_info', esc_html("Check GigaWallet Server connection") );
                 }
                 // we always update the current available balance
                 $this->update_option( 'gigawallet_balance', 'Ð ' . $this->amount );
@@ -310,7 +312,17 @@ function gigawallet_payment_init() {
                         'default' => __( 'Make sure to pay in full the order.', 'gigawallet'),
                         'desc_tip' => true,
                         'description' => __( 'Instructions shown to the buyer', 'gigawallet')
-                    )                      
+                    ),
+                    'gigawallet_debug_info' => array(
+                        'title' => __( 'GigaWallet Debug Info', 'gigawallet'),
+                        'type' => 'text',
+                        'custom_attributes' => array(
+                            'readonly' => 'readonly', // This makes the field read-only
+                        ),                        
+                        'default' => 'much waiting',
+                        'desc_tip' => true,
+                        'description' => __( 'GigaWallet Debug Info Response', 'gigawallet')
+                    )                                             
                 ));
             }
 

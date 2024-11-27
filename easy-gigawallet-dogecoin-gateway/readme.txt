@@ -1,13 +1,13 @@
 === Easy GigaWallet Dogecoin Gateway ===
 Contributors: inevitable360
-Tags: gigawallet, doge, dogecoin, crypto, cryptocurrency, payment, gateway, wordpress, woocommerce, ecommerce, online-store
+Tags: gigawallet, doge, dogecoin, dogebox, crypto, cryptocurrency, payment, gateway, wordpress, woocommerce, ecommerce, online-store
 Requires at least: 5.6
-Tested up to: 6.5.5
+Tested up to: 6.7.1
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://foundation.dogecoin.com
-Stable tag: 0.03
+Stable tag: 0.04
 
 Accept Dogecoin Payments easly using GigaWallet backend service.
 
@@ -91,6 +91,9 @@ You can verify the Terms of Service of the Coingecko API here https://www.coinge
 5. Dogecoin GigaWallet Payment Orders screenshot-4.png
 
 == Changelog ==
+
+= 0.03 =
+* Added Debug option
 
 = 0.03 =
 * Fixed Bug wen using multiple payment methods
